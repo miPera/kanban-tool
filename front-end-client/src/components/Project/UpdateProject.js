@@ -14,11 +14,16 @@ class UpdateProject extends Component {
       description: "",
       start_date: "",
       end_date: "",
+      errors: {},
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.project !== prevProps.project) {
+      if (this.props.errors) {
+        this.setState({ errors: this.props.errors });
+      }
+
       const {
         id,
         projectName,
@@ -139,10 +144,12 @@ UpdateProject.propTypes = {
   getProject: PropTypes.func.isRequired,
   createProject: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   project: state.project.project,
+  errors: state.errors,
 });
 
 export default connect(mapStateToProps, { getProject, createProject })(
